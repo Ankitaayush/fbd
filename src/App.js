@@ -2,7 +2,9 @@
 import React, { useState } from 'react';
 import ItemCategoryList from './components/ItemCategoryList';
 import ItemCategoryForm from './components/ItemCategoryForm';
-
+import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import Login from '../src/components/login';
+import VendorForm from '../src/components/VendorInteraction';
 function App() {
   const [items, setItems] = useState([]);
 
@@ -16,11 +18,17 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Item Management</h1>
+   <Router>
+    <Routes>
+      <Route path="/" element={
+      <div> <h1>Item Management</h1>
       <ItemCategoryList items={items} onDeleteItem={handleDeleteItem} />
-      <ItemCategoryForm onAddItem={handleAddItem} />
-    </div>
+      <ItemCategoryForm onAddItem={handleAddItem} /> </div>}/>
+       <Route path="/login" element={<Login />} />
+       <Route path="/vendors" element={<VendorForm />} />
+      </Routes>
+    </Router>
+
   );
 }
 
