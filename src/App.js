@@ -1,11 +1,29 @@
-// App.js
-import React, { useState } from 'react';
-import ItemCategoryList from './components/ItemCategoryList';
-import ItemCategoryForm from './components/ItemCategoryForm';
-import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import Login from '../src/components/login';
-import VendorForm from '../src/components/VendorInteraction';
+
+import './App.css';
+import { BrowserRouter,Route,Routes } from 'react-router-dom'
+
+import React, { useState, useEffect } from 'react';
+import NavBar from './components/navbar';
+import HomeAround from './components/HomeAround';
+import History from './components/History';
+import Request from './components/Request';
+import RequestTable from './components/requestView';
+import RequestInput from './components/request_input';
+import Manager from './components/manager';
+import Po from './components/po';
+import VendorInteraction from './components/UpadteVendor';
+import ItemCategoryForm from './components/ItemCategoryForm.js';
+import ItemCategoryList from './components/ItemCategoryList.js';
+import VendorForm from './components/VendorInteraction.js';
+import Login from './components/login.js';
+import Vp from './components/vp.js';
 function App() {
+
+  const handleSubmit = (formData) => {
+    // Handle the submitted form data, for now, just log it
+    console.log(formData);
+  };
+  
   const [items, setItems] = useState([]);
 
   const handleAddItem = (newItem) => {
@@ -18,39 +36,51 @@ function App() {
   };
 
   return (
-   <Router>
-    <Routes>
-      <Route path="/" element={
-      <div> <h1>Item Management</h1>
-      <ItemCategoryList items={items} onDeleteItem={handleDeleteItem} />
-      <ItemCategoryForm onAddItem={handleAddItem} /> </div>}/>
-       <Route path="/login" element={<Login />} />
-       <Route path="/vendors" element={<VendorForm />} />
+    <div>
+     <BrowserRouter>
+    
+      <Routes>
+        <Route path="/user" element={<HomeAround></HomeAround>}>
+        
+        <Route
+          path="item"
+          element={
+            <div>
+              {" "}
+              <h1>Item Management</h1>
+              <ItemCategoryList items={items} onDeleteItem={handleDeleteItem} />
+              <ItemCategoryForm onAddItem={handleAddItem} />{" "}
+            </div>
+          }
+        />
+          <Route path="vendor/update" element={<VendorInteraction></VendorInteraction>}/>
+          <Route path="vendor" element={<VendorForm />} />
+          <Route path="request/create" element={<RequestInput ></RequestInput>}/>
+          <Route path="request/track" element={<RequestTable  ></RequestTable>}/>
+          <Route path="request/history" element={<History  ></History>}/>
+
+      
+        </Route>
+        <Route path="/manager" element={<HomeAround />}>
+          <Route index element={<Manager onFormSubmit={handleSubmit} />} />
+          <Route path="Vp" element={<Vp onFormSubmit={handleSubmit} />} />
+          <Route path="po"  element={<Po onFormSubmit={handleSubmit} />} />
+
+        </Route>
+       
+        <Route path="/login" element={<Login />} />
+        <Route path="/requestview" element={<RequestTable />} />
+     
+        
+      
       </Routes>
-    </Router>
-
+      </BrowserRouter>
+    
+     
+      
+       
+    </div>
   );
+
 }
-
 export default App;
-
-// src/App.js
-// import React from 'react';
-// import VendorInteraction from './components/VendorInteraction';
-
-// function App() {
-//   const handleRequestInitiate = (request) => {
-//     console.log('Procurement request initiated:', request);
-//   };
-
-//   return (
-//     <div>
-//       <h1>Automated Asset Procurement System</h1>
-//       <VendorInteraction onRequestInitiate={handleRequestInitiate} />
-//       {/* Add other components as needed */}
-//     </div>
-//   );
-// }
-
-// export default App;
-
