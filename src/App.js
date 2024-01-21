@@ -17,6 +17,7 @@ import ItemCategoryList from './components/ItemCategoryList.js';
 import VendorForm from './components/VendorInteraction.js';
 import Login from './components/login.js';
 import Vp from './components/vp.js';
+import VendorManagement from './components/vendorManagement.js';
 function App() {
 
   const handleSubmit = (formData) => {
@@ -53,8 +54,8 @@ function App() {
             </div>
           }
         />
-          <Route path="vendor/update" element={<VendorInteraction></VendorInteraction>}/>
-          <Route path="vendor" element={<VendorForm />} />
+          <Route path="vendor" element={<VendorManagement />} />
+
           <Route path="request/create" element={<RequestInput ></RequestInput>}/>
           <Route path="request/track" element={<RequestTable  ></RequestTable>}/>
           <Route path="request/history" element={<History  ></History>}/>

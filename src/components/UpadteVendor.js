@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import '../public/vecti.css'; // Import the CSS file
 
-const VendorInteraction = () => {
-  const [formData, setFormData] = useState({
-    vendorName: '',
-    email: '',
-    contactPerson: '',
-    phone: '',
-    selectedItems: [],
-    selectedItemsIds: [],
-  });
+const VendorInteraction = ({ initialData, key }) => {
+  const [formData, setFormData] = useState(
+   initialData
+  );
 
-  const [vendorId, setVendorId] = useState(null);
+  const [vendorId, setVendorId] = useState(key);
+
+  // Extract selectedItems from initialData and set it initially
+  useEffect(() => {
+    if (initialData && initialData.selectedItems) {
+      setFormData((prevData) => ({
+        ...prevData,
+        selectedItems: initialData.selectedItems,
+      }));
+    }
+  }, [initialData]);
 
   const allItems = [
     { id: 1, label: 'Item 1', value: 'Item 1' },
@@ -31,41 +36,24 @@ const VendorInteraction = () => {
 
   const handleSelectChange = (selectedOptions) => {
     const selectedItems = selectedOptions.map((option) => option.value);
-    const selectedItemsIds = selectedOptions.map((option) => option.id);
-
     setFormData((prevData) => ({
       ...prevData,
       selectedItems,
-      selectedItemsIds,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Generate a unique vendor ID (you can use a library like uuid for this)
-    const newVendorId = generateUniqueId();
-    setVendorId(newVendorId);
-
-    // Now you can include the vendorId in your form data or perform any other actions
-    const formDataWithId = { ...formData, vendorId: newVendorId };
+    const formDataWithId = { vid: vendorId, ...formData };
     console.log('Form data submitted:', formDataWithId);
-
-    // Perform any other actions with the formDataWithId, such as sending it to the server
-    // or updating the state in the parent component.
   };
 
   const handleDelete = () => {
-    // Implement delete functionality here
     console.log('Delete request initiated.');
+    // Implement delete functionality here
   };
 
   const options = allItems.map((item) => ({ value: item.value, label: item.label, id: item.id }));
-
-  const generateUniqueId = () => {
-    // Logic to generate a unique ID, you can use a library like uuid or a custom logic
-    // For simplicity, using a timestamp as an example
-    return new Date().getTime().toString();
-  };
 
   return (
     <form className="vendor-form" onSubmit={handleSubmit}>

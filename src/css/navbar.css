@@ -6,11 +6,39 @@
   padding: 0;
 
 }
+
+
 body {
   margin: 0;
   padding: 0;
   background-color: rgb(240, 242, 246);
 }
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  height: 2px;
+  width:2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0066c0; /* Fastenal blue */
+  border-radius: 4px; /* Adjust the radius as needed */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* For Firefox */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: transparent #0066c0; /* Fastenal blue */
+}
+
+/* For Firefox - Hover effect (optional) */
+body:hover {
+  scrollbar-color: transparent #004b8d; /* Darker blue on hover */
+}
+
 
 /* Apply styles to the header */
 .header {
